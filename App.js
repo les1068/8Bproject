@@ -1,20 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import MainQuestion1 from './Screens/MainQuestion1';
+import SelectStrategy1 from './Screens/SelectStrategy1';
 
+const Stack = createStackNavigator();
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name = "MainQuestion 1" component={MainQuestion1}/>
+        <Stack.Screen name = "SelectStrategy1" component={SelectStrategy1}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+    //<MainQuestion1/>
   );
 }
+//#수정사항
+//TextInput이 줄바꿈이 안됨
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
