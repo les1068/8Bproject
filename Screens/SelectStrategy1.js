@@ -13,14 +13,24 @@ const SelectStrategy1 = () =>{
           How many pictures did Todd order?"`
           }</Text> 
       </View>
+
       <View style={styles.inputView}>
-        <Text style={{fontWeight:"bold"}}>Which strategy do you want to try?</Text>
-        <TouchableOpacity>
-            <Text style={styles.btn}>Write an equation to solve the problem</Text>
-            <Text style={styles.btn}>Add on the shipping fee until I get to $85,75.</Text>
-            <Text style={styles.btn}>Subtract away from $85,75 until I get to O.</Text>
-        </TouchableOpacity>
+          <Text style={{fontWeight:"bold"}}>Which strategy do you want to try?</Text>
+
+          <View style={{padding:15}}>
+          <Button color='#6666ff' title='Write an equation to solve the problem' />
+          </View>
+
+          <View style={{padding:15}}>
+          <Button color='#6666ff' title='Add on the shipping fee until I get to $85,75.'/>
+          </View>
+
+          <View style={{padding:15}}>
+          <Button color='#6666ff' title='Subtract away from $85,75 until I get to O.'/>
+          </View>
       </View>
+
+      
     </View>
     );
 }
@@ -54,21 +64,12 @@ const styles = StyleSheet.create({
       borderRadius:20
     },
     btn:{ //Button
-      marginTop:30,
-      //fontWeight:"bold",
       textAlign:'center',
       paddingVertical:10,
       paddingHorizontal:10,
       borderRadius: 10,
       backgroundColor:'#6666ff'
     },
-    input:{ //답을 입력받는 TextInput
-      flexShrink:1, //Input 줄바꿈
-      width:'100%',
-      height:'100%',
-      borderWidth:2, 
-      borderColor:'black'
-    }
   });
   
   export default SelectStrategy1;

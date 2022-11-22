@@ -18,11 +18,10 @@ const MainQuestion1=(props)=>{
         <Text style={{fontWeight:"bold"}}>What do you think the problem is asking you to do?</Text>
         <TextInput style={styles.input} multiline={true}/>
       </View>
-      <TouchableOpacity onPress={()=>{
+      <Button title='→' color='#6666ff' onPress={()=>{
         props.navigation.navigate("SelectStrategy1")
-      }}>
-        <Text style={styles.btn} >→</Text>
-      </TouchableOpacity>
+      }}/>
+     
     </View>
     );
 }
