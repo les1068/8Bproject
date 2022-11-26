@@ -1,5 +1,16 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react'
+import { Provider } from 'react-native-paper'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { theme } from './src/core/theme'
+import {
+  StartScreen,
+  LoginScreen,
+  RegisterScreen,
+  ResetPasswordScreen,
+  Dashboard,
+} from './src/screens'
+
 import MainQuestion1 from './Screens/MainQuestion1';
 import SelectStrategy1 from './Screens/SelectStrategy1';
 import Question1_1_1 from './Screens/Question1_1_1'
@@ -83,15 +94,30 @@ import Question8_2_3 from './Screens/Question8_2_3'
 import Question8_3_1 from './Screens/Question8_3_1'
 import Question8_3_2 from './Screens/Question8_3_2'
 import Question8_3_3 from './Screens/Question8_2_3'
+import MainScreen from './Screens/MainScreen';
 
+const Stack = createStackNavigator()
 
-
-const Stack = createStackNavigator();
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name = "MainQuestion 1" component={MainQuestion1}/>
+    <Provider theme={theme}>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="StartScreen"
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="StartScreen" component={StartScreen} />
+          <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen
+            name="ResetPasswordScreen"
+            component={ResetPasswordScreen}
+          />
+          <Stack.Screen name = "MainScreen" component={MainScreen}/>
+        <Stack.Screen name = "MainQuestion1" component={MainQuestion1}/>
         <Stack.Screen name = "SelectStrategy1" component={SelectStrategy1}/>
         <Stack.Screen name = "Question1_1_1" component={Question1_1_1}/>
         <Stack.Screen name = "Question1_1_2" component={Question1_1_2}/>
@@ -175,16 +201,8 @@ export default function App() {
         <Stack.Screen name = "Question8_3_2" component={Question8_3_2}/>
         <Stack.Screen name = "Question8_3_3" component={Question8_3_3}/>
 
-
-  
-       
-
-      </Stack.Navigator>
-    </NavigationContainer>
-    //<MainQuestion1/>
-  );
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
+  )
 }
-//#수정사항
-//TextInput이 줄바꿈이 안됨
-
-
