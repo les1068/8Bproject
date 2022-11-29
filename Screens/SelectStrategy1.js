@@ -1,32 +1,57 @@
-import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { useState } from 'react';
+import  {db}  from '../firebaseConfig';
+import { 
+  addDoc, 
+  collection, 
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc,  
+  where,
+  query} from "firebase/firestore"; 
+import * as DBfunction from '../Database'
 
-const SelectStrategy1 = () =>{
+
+const SelectStrategy1 = (props) =>{
+  const [flag,setFlag] = useState(true)
+  const [question,setQuestion] = useState();
+
+  const readfromDB = async ()=>{ //DB Data 읽기
+    try{
+      const data = await getDocs(collection(db, "question" ))
+      setQuestion(data.docs.map(doc => ({ ...doc.data(), id: doc.id})))
+    }catch(error){
+      console.log(error.message)
+    }
+  }
+if(flag){
+  readfromDB()//DB읽기
+  setFlag(false)
+}
     return(
-        <View style={styles.container}>
-      <StatusBar backgroundColor='black'/>
+      <View style={styles.container}>
       <View style={styles.questionBox}>
-        <Text style={{fontWeight:"bold"}}>{
-          `"Todd orders pictures from a photographer. Each picture costs $7.50.
-          A one-time shipping fee of $3.25 is added to the cost of the order.
-          The total cost of Todd’s order before tax is $85.75.
-          How many pictures did Todd order?"`
-          }</Text> 
+      <Text style={{fontWeight:"bold"}}>{`Todd orders pictures from a photographer. Each picture costs $7.50. 
+      A one-time shipping fee of $3.25 is added to the cost of the order.
+      The total cost of Todd’s order before tax is $85.75.`}</Text>
       </View>
 
       <View style={styles.inputView}>
           <Text style={{fontWeight:"bold"}}>Which strategy do you want to try?</Text>
 
           <View style={{padding:15}}>
-          <Button color='#6666ff' title='Write an equation to solve the problem' />
+          <Button 
+            color='#6666ff' title="Write an equation to solve the problem" onPress = {()=>props.navigation.navigate("Question1_1_1")}
+            />
           </View>
 
           <View style={{padding:15}}>
-          <Button color='#6666ff' title='Add on the shipping fee until I get to $85,75.'/>
+            <Button color='#6666ff' title="Add on the shipping fee until I get to $85,75." onPress={()=>props.navigation.navigate("Question1_2_1")}/>
           </View>
 
           <View style={{padding:15}}>
-          <Button color='#6666ff' title='Subtract away from $85,75 until I get to O.'/>
+             <Button color='#6666ff' title="Subtract away from $85,75 until I get to O." onPress = {()=>props.navigation.navigate("Question1_3_1")}/>
           </View>
       </View>
 

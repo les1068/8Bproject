@@ -1,53 +1,32 @@
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
-import  {db}  from '../firebaseConfig';
-import { 
-  addDoc, 
-  collection, 
-  getDocs,
-  doc,
-  updateDoc,
-  deleteDoc,  
-  where,
-  query} from "firebase/firestore"; 
-import * as DBfunction from '../Database'
+import { StatusBar } from 'expo-status-bar';
+import React, { useState } from 'react'
 
-const MainQuestion1=(props)=>{
-  const [flag,setFlag] = useState(true)
-  const [answer,setAnswer] = useState()
 
-  const readfromDB = async ()=>{ //DB Data 읽기
-    try{
-      const data = await getDocs(collection(db, "question" ))
-      setQuestion(data.docs.map(doc => ({ ...doc.data(), id: doc.id})))
-    }catch(error){
-      console.log(error.message)
-    }
-  }
-
-  if(flag){ 
-    readfromDB()//Question DB읽기
-    setFlag(false) //루프 탈출
-  }
-
+const MainQuestion5=(props)=>{
     return(
     <View style={styles.container}>
+      <StatusBar backgroundColor='black'/>
       <View style={styles.questionBox}>
-       <Text style={{fontWeight:"bold"}}>{`Todd orders pictures from a photographer. Each picture costs $7.50. A one-time shipping fee of $3.25 is added to the cost of the order. The total cost of Todd’s order before tax is $85.75.`}</Text>
+        <Text style={{fontWeight:"bold"}}>{
+          `Mario is setting up a new tent during a camping trip. The tent came with 7 feet of rope. The instructions are to use 34.5 inches of the rope to tie 
+          a tarp on top of the tent. Then, the remaining rope should be cut into 8¼-inch sections to tie the tent to stakes in the ground. Mario will use all o
+          f the rope as instructed. Write and solve an equation to determine the number of 8¼-inch sections of rope Mario can cut from the rope.`
+          }</Text> 
       </View>
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>What do you think the problem is asking you to do?</Text>
-        <TextInput 
-        style={styles.input}
-        multiline={true} />
+        <TextInput style={styles.input} multiline={true}/>
       </View>
-      <Button title='→' color='#6666ff' onPress={()=>{
-        props.navigation.navigate("SelectStrategy1")
-      }}/>
+      <TouchableOpacity
+        onPress={()=>{
+        props.navigation.navigate("SelectStrategy5")
+      }}>
+        <Text style={styles.btn} >→</Text>
+      </TouchableOpacity>
     </View>
     );
 }
-
 
 const styles = StyleSheet.create({
     container: {//전체적인 View
@@ -65,9 +44,7 @@ const styles = StyleSheet.create({
       borderWidth:2,
       borderColor:'#5614B0',
       borderStyle:'solid',
-      marginBottom:15,
-      width:400,
-      height:100
+      marginBottom:15
     },
     inputView:{ //Button들이 모여있는 View
       height:'30%',
@@ -91,11 +68,11 @@ const styles = StyleSheet.create({
     },
     input:{ //답을 입력받는 TextInput
       flexShrink:1, //Input 줄바꿈
-      width:350,
-      height:150,
+      width:'100%',
+      height:'100%',
       borderWidth:2, 
       borderColor:'black'
     }
   });
 
-export default MainQuestion1;
+export default MainQuestion5;

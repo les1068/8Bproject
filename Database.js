@@ -9,14 +9,13 @@ import {
   updateDoc,
   deleteDoc,  
   where,
-  query } from "firebase/firestore"; 
-const Database = ()=>{
-  const [addID, setAddID] = useState('');
-  const [addPW, setAddPW] = useState('');
-  const [addName, setAddName] = useState(''); 
-  const [id, setID] = useState('');
-  const [users, setUsers] = useState();
-  const deletefromDB = async ()=>{
+  query,
+  Firestore,
+  getDoc, } from "firebase/firestore"; 
+
+
+
+  export const deletefromDB = async ()=>{
     try{
       const docRef = doc(db, "user", id);
       await deleteDoc(docRef);
@@ -27,7 +26,7 @@ const Database = ()=>{
     }
   }
 
-  const updateDB = async ()=>{
+  export const updateDB = async ()=>{
     try{
       const docRef = doc(db, "user", id);
       await updateDoc(docRef, {
@@ -41,11 +40,11 @@ const Database = ()=>{
     }
   }
 
-  const queryDB = async ()=>{
+  export const queryDB = async ()=>{
     try{
-      const q = await query(collection(db, "user" ), where('addName',"==","test23"))
+      const q = query(collection(db, "user"), where("m_question"));
       const singleDoc = await getDocs(q);
-      console.log(singleDoc)
+      comsole.log(singleDoc)
     }catch(error){
       console.log(error.message)
     }
@@ -53,27 +52,26 @@ const Database = ()=>{
 
   const readfromDB = async ()=>{ //DB Data 읽기
     try{
-      const data = await getDocs(collection(db, "user" ))
-      setUsers(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+      const data = await getDocs(collection(db, "question" ))
+      var result = data.docs.map(doc => ({ ...doc.data()}));
     }catch(error){
       console.log(error.message)
     }
+    return result;
   }
 
-  const addtoDB = async ()=>{
+  export const addtoDB = async (answer)=>{
     try{
-      await addDoc(collection(db, "user" ), {
-        addID: addID,
-        addPW: addPW,
-        addName: addName,
+      await addDoc(collection(db, "question" ), {
+        addID: {answer},
       });
       alert("Added!!")
-      setAddName("")
-      setAddAge("")
     }catch(error){
       console.log(error.message)
     }
   }
-}
+  
 
-export default Database;
+
+
+
