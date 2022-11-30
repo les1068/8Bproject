@@ -1,7 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react'
-const Question2_1_1 = (props) =>{
+import { updateDB } from '../Database';
+const Question2_1_1 = ({route,navigation}) =>{
+  const [answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "sub_question2_1_1"
+  
+  
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -20,9 +26,10 @@ const Question2_1_1 = (props) =>{
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>
         Let’s add up Jen’s total from Monday through Thursday. How many miles has she run?</Text>
-        <TextInput style={styles.input} multiline={true}/>
+        <TextInput style={styles.input} multiline={true} value={answer} onChangeText={setAnswer}/>
         <TouchableOpacity onPress={()=>{
-        props.navigation.navigate("Question2_1_2")
+        updateDB(nickname,qid,answer)
+        navigation.navigate("Question2_1_2",{nickname:nickname})
         }}>
             <Text style={styles.btn}>NEXT</Text>
         </TouchableOpacity>

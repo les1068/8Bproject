@@ -2,7 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react'
 
-const SelectStrategy2 = (props) =>{
+const SelectStrategy2 = ({route,navigation}) =>{
+  const {nickname} = route.params;
+  const solved1 = route.params.solved1;
+  const solved2 = route.params.solved2;
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -17,19 +20,21 @@ const SelectStrategy2 = (props) =>{
         <Text style={{fontWeight:"bold"}}>Which strategy do you want to try?</Text>
         <TouchableOpacity
          onPress={()=>{
-        props.navigation.navigate("Question2_1_1")
-        }}>
+        navigation.navigate("Question2_1_1",{nickname:nickname})
+        }}
+        disabled={solved1}>
             <Text style={styles.btn}>Add up her miles and then find out how many more she needs to get to 22 miles</Text>
         </TouchableOpacity>
         <TouchableOpacity 
         onPress={()=>{
-          props.navigation.navigate("Question2_2_1")
-          }}>
+          navigation.navigate("Question2_2_1",{nickname:nickname})
+          }}
+          disabled={solved2}>
             <Text style={styles.btn}>Write an equation to solve it</Text>
         </TouchableOpacity>
         <TouchableOpacity
         onPress={()=>{
-          props.navigation.navigate("Question2_3_1")
+          navigation.navigate("Question2_3_1",{nickname:nickname})
           }}>
             <Text style={styles.btn}>Subtract her miles from 22 and see how many are lef</Text>
         </TouchableOpacity>

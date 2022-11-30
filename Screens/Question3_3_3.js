@@ -1,7 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react'
-const Question3_3_3 = (props) =>{
+import { updateDB } from '../Database';
+const Question3_3_3 = ({route,navigation}) =>{
+  const [answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "sub_question3_3_3"
+
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -19,9 +24,10 @@ const Question3_3_3 = (props) =>{
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>
         Fantastic! Now let’s find how long each of those shorter rectangles are.</Text>
-        <TextInput style={styles.input} multiline={true}/>
+        <TextInput style={styles.input} multiline={true} value={answer} onChangeText={setAnswer}/>
         <TouchableOpacity onPress={()=>{
-        props.navigation.navigate("SelectStrategy4")
+        updateDB(nickname,qid,answer)
+        navigation.navigate("MainQuestion4",{nickname:nickname})
         }}>
             <Text style={styles.btn}>NEXT</Text>
         </TouchableOpacity>

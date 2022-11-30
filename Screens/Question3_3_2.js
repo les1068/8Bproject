@@ -1,7 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react'
-const Question3_3_2 = (props) =>{
+import { updateDB } from '../Database';
+const Question3_3_2 = ({route,navigation}) =>{
+  const [answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "sub_question3_3_2"
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -19,9 +23,10 @@ const Question3_3_2 = (props) =>{
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>
         Great job! Can you find out how long all 6 of the shorter rectangles are combined?</Text>
-        <TextInput style={styles.input} multiline={true}/>
+        <TextInput style={styles.input} multiline={true} value={answer} onChangeText={setAnswer}/>
         <TouchableOpacity onPress={()=>{
-        props.navigation.navigate("Question3_3_3")
+        updateDB(nickname,qid,answer)
+        navigation.navigate("Question3_3_3",{nickname:nickname})
         }}>
             <Text style={styles.btn}>NEXT</Text>
         </TouchableOpacity>

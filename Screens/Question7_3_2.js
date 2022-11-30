@@ -1,7 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react'
-const Question7_3_2 = (props) =>{
+import { updateDB } from '../Database';
+const Question7_3_2 = ({route,navigation}) =>{
+  const [answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "sub_question7_3_2"
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -19,9 +23,10 @@ const Question7_3_2 = (props) =>{
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>
         All right, you say he pays $25 for mileage. Then he has to pay $21 for each day that he rents. How many times can you add $21 without going over $115?</Text>
-        <TextInput style={styles.input} multiline={true}/>
+        <TextInput style={styles.input} multiline={true} value={answer} onChangeText={setAnswer}/>
         <TouchableOpacity onPress={()=>{
-        props.navigation.navigate("MainQuestion8")
+          updateDB(nickname,qid,answer) 
+        navigation.navigate("MainQuestion8",{nickname:nickname})
         }}>
             <Text style={styles.btn}>NEXT</Text>
         </TouchableOpacity>

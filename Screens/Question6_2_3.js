@@ -1,7 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react'
+import { updateDB } from '../Database';
 const Question6_2_3 = (props) =>{
+  const [answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "sub_question6_2_3"
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -19,9 +23,10 @@ const Question6_2_3 = (props) =>{
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>
         Ok, so you guessed that the width is [w] and the length is [w+12]. Now let’s find the perimeter of the rectangle with these dimensions.</Text>
-        <TextInput style={styles.input} multiline={true}/>
+        <TextInput style={styles.input} multiline={true} value={answer} onChangeText={setAnswer}/>
         <TouchableOpacity onPress={()=>{
-        props.navigation.navigate("Question6_2_4")
+          updateDB(nickname,qid,answer) 
+        navigation.navigate("Question6_2_4",{nickname:nickname})
         }}>
             <Text style={styles.btn}>NEXT</Text>
         </TouchableOpacity>

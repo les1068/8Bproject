@@ -1,7 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react'
-const Question4_1_4 = (props) =>{
+import { updateDB } from '../Database';
+const Question4_1_4 = ({route,navigation}) =>{
+  const [answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "sub_question4_1_4"
+  const solved = true;
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -19,9 +24,10 @@ const Question4_1_4 = (props) =>{
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>
         Nice work! The points for Elena, Karla, and Faye add up to 114, so that seems correct! So who scored the most?</Text>
-        <TextInput style={styles.input} multiline={true}/>
+        <TextInput style={styles.input} multiline={true}  value={answer} onChangeText={setAnswer}/>
         <TouchableOpacity onPress={()=>{
-        props.navigation.navigate("SelectStrategy4")
+        updateDB(nickname,qid,answer)  
+        navigation.navigate("SelectStrategy4",{nickname:nickname,solved1:solved})
         }}>
             <Text style={styles.btn}>NEXT</Text>
         </TouchableOpacity>

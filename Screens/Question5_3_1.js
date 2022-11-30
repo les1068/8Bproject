@@ -1,7 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react'
-const Question5_3_1 = (props) =>{
+import { updateDB } from '../Database';
+const Question5_3_1 = ({route,navigation}) =>{
+  const [answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "sub_question5_3_1"
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -20,9 +24,10 @@ const Question5_3_1 = (props) =>{
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>
         Ok, you want to subtract from the total. Start by subtracting 34.5 inches. How much rope does Mario have left?</Text>
-        <TextInput style={styles.input} multiline={true}/>
+        <TextInput style={styles.input} multiline={true} value={answer} onChangeText={setAnswer}/>
         <TouchableOpacity onPress={()=>{
-        props.navigation.navigate("Question5_3_2")
+          updateDB(nickname,qid,answer) 
+        navigation.navigate("Question5_3_2",{nickname:nickname})
         }}>
             <Text style={styles.btn}>NEXT</Text>
         </TouchableOpacity>

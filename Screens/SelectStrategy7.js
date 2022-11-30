@@ -1,7 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react'
-const SelectStrategy7 = (props) =>{
+const SelectStrategy7 = ({route,navigation}) =>{
+  const {nickname} = route.params;
+  const solved1 = route.params.solved1;
+  const solved2 = route.params.solved2;
   return(
       <View style={styles.container}>
     <StatusBar backgroundColor='black'/>
@@ -16,19 +19,21 @@ const SelectStrategy7 = (props) =>{
       <Text style={{fontWeight:"bold"}}>Which strategy do you want to try?</Text>
       <TouchableOpacity
        onPress={()=>{
-      props.navigation.navigate("Question7_1_1") //
-      }}>
+      navigation.navigate("Question7_1_1",{nickname:nickname}) //
+      }}
+      disabled = {solved1}>
           <Text style={styles.btn}>Write an inequality to solve the problem</Text>
       </TouchableOpacity>
       <TouchableOpacity
       onPress={()=>{
-        props.navigation.navigate("Question7_2_1") //
-        }}>
+        navigation.navigate("Question7_2_1",{nickname:nickname}) //
+        }}
+        disabled = {solved2}>
           <Text style={styles.btn}>Guess and check</Text>
       </TouchableOpacity>
       <TouchableOpacity
       onPress={()=>{
-        props.navigation.navigate("Question7_3_1") //
+        navigation.navigate("Question7_3_1",{nickname:nickname}) //
         }}>
           <Text style={styles.btn}>Add up until I find the number of days</Text>
       </TouchableOpacity>

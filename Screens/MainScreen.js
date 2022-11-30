@@ -5,16 +5,19 @@ import { Text } from 'react-native-paper'
 
 
 
-const MainScreen = (props)=>{
+const MainScreen = ({route,navigation})=>{
+    const {nickname} = route.params;
     return(
     <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
-      <TouchableOpacity onPress={()=>{ props.navigation.navigate("MainQuestion1") }}>
+      <TouchableOpacity onPress={()=>{ 
+        console.log(nickname)
+        navigation.navigate("MainQuestion1",{nickname:nickname})}}>
         <View style={styles.questionBox}>
-        <Text style={{fontWeight:"bold"}}>{`Start` }</Text> 
-      </View>
+          <Text style={{fontWeight:"bold"}}>Start</Text> 
+        </View>
       </TouchableOpacity>
-      
+
     </View>
     );
 }

@@ -1,7 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react'
-const Question8_3_1 = (props) =>{
+import { updateDB } from '../Database';
+const Question8_3_1 = ({route,navigation}) =>{
+  const [answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "sub_question8_3_1"
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -19,9 +23,10 @@ const Question8_3_1 = (props) =>{
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>
         Ok, you want to try adding up. Let’s start by thinking about the two sides along the length of the garden. How much fence will Owen use for those sides?</Text>
-        <TextInput style={styles.input} multiline={true}/>
+        <TextInput style={styles.input} multiline={true} value={answer} onChangeText={setAnswer}/>
         <TouchableOpacity onPress={()=>{
-        props.navigation.navigate("Question8_3_2")
+        updateDB(nickname,qid,answer) 
+        navigation.navigate("Question8_3_2")
         }}>
             <Text style={styles.btn}>NEXT</Text>
         </TouchableOpacity>

@@ -1,7 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react'
-const Question8_3_2 = (props) =>{
+import { updateDB } from '../Database';
+const Question8_3_2 = ({route,navigation}) =>{
+  const [answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "sub_question8_3_2"
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -19,9 +23,10 @@ const Question8_3_2 = (props) =>{
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>
         ll right, you say he’ll use 50 feet of fencing for the two sides along the length. Now, how much fencing can you add without going over 80 feet?</Text>
-        <TextInput style={styles.input} multiline={true}/>
+        <TextInput style={styles.input} multiline={true} value={answer} onChangeText={setAnswer}/>
         <TouchableOpacity onPress={()=>{
-        props.navigation.navigate("Question8_3_3")
+          updateDB(nickname,qid,answer) 
+        navigation.navigate("Question8_3_3")
         }}>
             <Text style={styles.btn}>NEXT</Text>
         </TouchableOpacity>

@@ -1,8 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { updateDB } from '../Database';
 
-
-const Question8_3_3 = (props) =>{
+const Question8_3_3 = ({route,navigation}) =>{
+  const [answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "sub_question8_3_3"
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -20,9 +23,10 @@ const Question8_3_3 = (props) =>{
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>
         All right, so if you can add 30 feet of fencing before running out, then how wide could the garden be?</Text>
-        <TextInput style={styles.input} multiline={true}/>
+        <TextInput style={styles.input} multiline={true} value={answer} onChangeText={setAnswer}/>
         <TouchableOpacity onPress={()=>{
-        props.navigation.navigate("MainScreen")
+        updateDB(nickname,qid,answer) 
+        navigation.navigate("MainScreen")
         }}>
             <Text style={styles.btn}>HOME</Text>
         </TouchableOpacity>

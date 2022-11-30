@@ -2,7 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react'
 
-const SelectStrategy3 = (props) =>{
+const SelectStrategy3 = ({route,navigation}) =>{
+  const {nickname} = route.params;
+  const solved1 = route.params.solved1;
+  const solved2 = route.params.solved2;
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -16,19 +19,21 @@ const SelectStrategy3 = (props) =>{
         <Text style={{fontWeight:"bold"}}>Which strategy do you want to try?</Text>
         <TouchableOpacity
          onPress={()=>{
-        props.navigation.navigate("Question3_1_1")
-        }}>
+        navigation.navigate("Question3_1_1",{nickname:nickname})
+        }}
+        disabled={solved1}>
             <Text style={styles.btn}>Subtract the extra yards and then figure out how much fabric she used for each curtain</Text>
         </TouchableOpacity>
         <TouchableOpacity 
         onPress={()=>{
-          props.navigation.navigate("Question3_2_1")
-          }}>
+          navigation.navigate("Question3_2_1",{nickname:nickname})
+          }}
+          disabled={solved2}>
             <Text style={styles.btn}>Write an equation to solve it</Text>
         </TouchableOpacity>
         <TouchableOpacity
         onPress={()=>{
-          props.navigation.navigate("Question3_3_1")
+          navigation.navigate("Question3_3_1",{nickname:nickname})
           }}>
             <Text style={styles.btn}>Use a diagram to try and understand the problem</Text>
         </TouchableOpacity>

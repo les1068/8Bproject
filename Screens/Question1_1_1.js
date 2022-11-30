@@ -1,8 +1,13 @@
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react'
+import * as DBfunction from '../Database'
 
-const Question1_1_1 = (props) =>{
+const Question1_1_1 = ({route,count,navigation}) =>{
+  const [answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "sub_question1_1_1"
+
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -24,9 +29,10 @@ const Question1_1_1 = (props) =>{
             OK. Using p to represent the number of pictures, 
             write an equation that represents how p, 
             $7.50 per picture, and the $3.25 shipping fee combine to make $85.75</Text>
-        <TextInput style={styles.input} multiline={true}/>
+        <TextInput style={styles.input} multiline={true} value={answer} onChangeText={setAnswer}/>
         <TouchableOpacity onPress={()=>{
-        props.navigation.navigate("Question1_1_2")
+        DBfunction.updateDB(nickname,qid,answer)
+        navigation.navigate("Question1_1_2",{nickname:nickname})
         }}>
             <Text style={styles.btn}>NEXT</Text>
         </TouchableOpacity>

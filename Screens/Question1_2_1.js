@@ -1,7 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react'
-const Question1_2_1 = (props) =>{
+import { updateDB } from '../Database';
+const Question1_2_1 = ({route,navigation}) =>{
+  const [answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "sub_question1_2_1"
+  const solved = true;
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -21,9 +26,10 @@ const Question1_2_1 = (props) =>{
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>
         OK, let’s try that. Start from $3.25. How many times do you have to add $7.50 to get to $85.75?</Text>
-        <TextInput style={styles.input} multiline={true}/>
+        <TextInput style={styles.input} multiline={true} value={answer} onChangeText={setAnswer}/>
         <TouchableOpacity onPress={()=>{
-        props.navigation.navigate("SelectStrategy1")
+        updateDB(nickname,qid,answer)
+        navigation.navigate("SelectStrategy1",{nickname:nickname, solved1:solved, solved2:solved})
         }}>
             <Text style={styles.btn}>NEXT</Text>
         </TouchableOpacity>

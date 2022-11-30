@@ -11,9 +11,8 @@ import {
   where,
   query,
   Firestore,
-  getDoc, } from "firebase/firestore"; 
-
-
+  getDoc, 
+  setDoc} from "firebase/firestore"; 
 
   export const deletefromDB = async ()=>{
     try{
@@ -26,15 +25,13 @@ import {
     }
   }
 
-  export const updateDB = async ()=>{
+  export const updateDB = async (props,qid,answer)=>{//nickname, question id, answer
     try{
-      const docRef = doc(db, "user", id);
-      await updateDoc(docRef, {
-        addID: addID,
-        addPW: addPW
-      });
+      const docRef = doc(db, "User",props); //props is nickname.
+      await updateDoc(docRef, 
+        `${qid}`,answer //qid: answer 형태로 DB에 Update
+      );
       alert("Updated!!")
-      readfromDB()
     }catch(error){
       console.log(error.message)
     }
@@ -50,20 +47,30 @@ import {
     }
   }
 
-  const readfromDB = async ()=>{ //DB Data 읽기
+  export const readfromDB = async ()=>{ //DB Data 읽기
     try{
       const data = await getDocs(collection(db, "question" ))
       var result = data.docs.map(doc => ({ ...doc.data()}));
     }catch(error){
       console.log(error.message)
     }
-    return result;
   }
 
-  export const addtoDB = async (answer)=>{
+  export const addNickname = async (props)=>{
     try{
-      await addDoc(collection(db, "question" ), {
-        addID: {answer},
+      await setDoc(doc(db,"User",props), {
+        Nickname: props,
+      });
+      alert("Added!!")
+    }catch(error){
+      console.log(error.message)
+    }
+  }
+
+  export const addAnswer = async (props,answer)=>{
+    try{
+      await setDoc(doc(db,"User",props), {
+        m_question: answer
       });
       alert("Added!!")
     }catch(error){

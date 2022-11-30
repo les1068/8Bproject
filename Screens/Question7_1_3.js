@@ -1,7 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react'
-const Question7_1_3 = (props) =>{
+import { updateDB } from '../Database';
+const Question7_1_3 = ({route,navigation}) =>{
+  const [answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "sub_question7_1_3"
+  const solved = true;
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -19,9 +24,10 @@ const Question7_1_3 = (props) =>{
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>
         Great! Now based on that inequality, how many days can Jim rent the car for?</Text>
-        <TextInput style={styles.input} multiline={true}/>
+        <TextInput style={styles.input} multiline={true}  value={answer} onChangeText={setAnswer}/>
         <TouchableOpacity onPress={()=>{
-        props.navigation.navigate("SelectStrategy7")
+           updateDB(nickname,qid,answer) 
+        navigation.navigate("SelectStrategy7",{nickname:nickname, solved1:solved})
         }}>
             <Text style={styles.btn}>NEXT</Text>
         </TouchableOpacity>

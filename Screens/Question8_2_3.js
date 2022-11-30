@@ -1,7 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react'
-const Question8_2_3 = (props) =>{
+import { updateDB } from '../Database';
+const Question8_2_3 = ({route,navigation}) =>{
+  const [answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "sub_question8_2_3"
+  const solved = true;
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -19,9 +24,10 @@ const Question8_2_3 = (props) =>{
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>
         Nice work! If that’s correct, then how wide could the fence be?</Text>
-        <TextInput style={styles.input} multiline={true}/>
+        <TextInput style={styles.input} multiline={true} value={answer} onChangeText={setAnswer}/>
         <TouchableOpacity onPress={()=>{
-        props.navigation.navigate("SelectStrategy8")
+        updateDB(nickname,qid,answer) 
+        navigation.navigate("SelectStrategy8",{nickname:nickname, solved1:solved, solved2:solved})
         }}>
             <Text style={styles.btn}>NEXT</Text>
         </TouchableOpacity>

@@ -1,9 +1,13 @@
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react'
+import { updateDB } from '../Database';
 
 
-const MainQuestion4=(props)=>{
+const MainQuestion4=({route,navigation})=>{
+  const [answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "m_question4"
     return(
     <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -15,11 +19,12 @@ const MainQuestion4=(props)=>{
       </View>
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>What do you think the problem is asking you to do?</Text>
-        <TextInput style={styles.input} multiline={true}/>
+        <TextInput style={styles.input} multiline={true} value={answer} onChangeText={setAnswer}/>
       </View>
       <TouchableOpacity
         onPress={()=>{
-        props.navigation.navigate("SelectStrategy4")
+        updateDB(nickname,qid,answer)
+        navigation.navigate("SelectStrategy4",{nickname:nickname}) //navigation화면으로 매개변수 넘기기
       }}>
         <Text style={styles.btn} >→</Text>
       </TouchableOpacity>

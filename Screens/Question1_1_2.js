@@ -1,7 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react'
-const Question1_1_2 = (props) =>{
+import * as DBfunction from '../Database'
+
+const Question1_1_2 = ({route,navigation}) =>{
+  const[answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "sub_question1_1_2"
+  const solved = true
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -21,10 +27,17 @@ const Question1_1_2 = (props) =>{
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>
         Ok, your equation is equivalentto 3.25 + 7.50p = 85.75 Can you solve to find the value of p?</Text>
-        <TextInput style={styles.input} multiline={true}/>
+        <TextInput 
+        style={styles.input} 
+        multiline={true}
+        value={answer}
+        onChangeText={setAnswer}/>
         <TouchableOpacity onPress={()=>{
-        props.navigation.navigate("SelectStrategy1")
-        }}>
+        DBfunction.updateDB(nickname,qid,answer)
+        navigation.navigate("SelectStrategy1",{
+          nickname:nickname,
+          solved1:solved
+        })}}>
             <Text style={styles.btn}>NEXT</Text>
         </TouchableOpacity>
       </View>

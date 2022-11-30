@@ -13,22 +13,11 @@ import {
 import * as DBfunction from '../Database'
 
 
-const SelectStrategy1 = (props) =>{
-  const [flag,setFlag] = useState(true)
-  const [question,setQuestion] = useState();
+const SelectStrategy1 = ({route,navigation}) =>{
+  const {nickname} = route.params;
+  const solved1 = route.params.solved1;
+  const solved2 = route.params.solved2;
 
-  const readfromDB = async ()=>{ //DB Data 읽기
-    try{
-      const data = await getDocs(collection(db, "question" ))
-      setQuestion(data.docs.map(doc => ({ ...doc.data(), id: doc.id})))
-    }catch(error){
-      console.log(error.message)
-    }
-  }
-if(flag){
-  readfromDB()//DB읽기
-  setFlag(false)
-}
     return(
       <View style={styles.container}>
       <View style={styles.questionBox}>
@@ -42,16 +31,18 @@ if(flag){
 
           <View style={{padding:15}}>
           <Button 
-            color='#6666ff' title="Write an equation to solve the problem" onPress = {()=>props.navigation.navigate("Question1_1_1")}
+            color='#6666ff' title="Write an equation to solve the problem" onPress = {()=>navigation.navigate("Question1_1_1",{nickname:nickname})}
+            disabled={solved1}
             />
           </View>
 
           <View style={{padding:15}}>
-            <Button color='#6666ff' title="Add on the shipping fee until I get to $85,75." onPress={()=>props.navigation.navigate("Question1_2_1")}/>
+            <Button color='#6666ff' title="Add on the shipping fee until I get to $85,75." onPress={()=>navigation.navigate("Question1_2_1",{nickname:nickname})}
+            disabled={solved2}/>
           </View>
 
           <View style={{padding:15}}>
-             <Button color='#6666ff' title="Subtract away from $85,75 until I get to O." onPress = {()=>props.navigation.navigate("Question1_3_1")}/>
+             <Button color='#6666ff' title="Subtract away from $85,75 until I get to O." onPress = {()=>navigation.navigate("Question1_3_1",{nickname:nickname})}/>
           </View>
       </View>
 

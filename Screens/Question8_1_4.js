@@ -1,7 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react'
-const Question8_1_4 = (props) =>{
+import { updateDB } from '../Database';
+const Question8_1_4 = ({route,navigation}) =>{
+  const [answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "sub_question8_1_4"
+  const solved = true;
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -19,9 +24,10 @@ const Question8_1_4 = (props) =>{
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>
         Ok, if that’s true, then how much fencing would he use all together to make his rectangular garden fence? work!</Text>
-        <TextInput style={styles.input} multiline={true}/>
+        <TextInput style={styles.input} multiline={true} value={answer} onChangeText={setAnswer}/>
         <TouchableOpacity onPress={()=>{
-        props.navigation.navigate("SelectStrategy8")
+          updateDB(nickname,qid,answer) 
+        navigation.navigate("SelectStrategy8",{nickname:nickname, solved1:solved})
         }}>
             <Text style={styles.btn}>NEXT</Text>
         </TouchableOpacity>

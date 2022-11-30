@@ -12,24 +12,10 @@ import {
   query} from "firebase/firestore"; 
 import * as DBfunction from '../Database'
 
-const MainQuestion1=(props)=>{
-  const [flag,setFlag] = useState(true)
-  const [answer,setAnswer] = useState()
-
-  const readfromDB = async ()=>{ //DB Data 읽기
-    try{
-      const data = await getDocs(collection(db, "question" ))
-      setQuestion(data.docs.map(doc => ({ ...doc.data(), id: doc.id})))
-    }catch(error){
-      console.log(error.message)
-    }
-  }
-
-  if(flag){ 
-    readfromDB()//Question DB읽기
-    setFlag(false) //루프 탈출
-  }
-
+const MainQuestion1=({route,navigation})=>{
+  const [answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "m_question1"
     return(
     <View style={styles.container}>
       <View style={styles.questionBox}>
@@ -39,10 +25,14 @@ const MainQuestion1=(props)=>{
         <Text style={{fontWeight:"bold"}}>What do you think the problem is asking you to do?</Text>
         <TextInput 
         style={styles.input}
-        multiline={true} />
+        value={answer}
+        multiline={true}
+        onChangeText={setAnswer} />
       </View>
       <Button title='→' color='#6666ff' onPress={()=>{
-        props.navigation.navigate("SelectStrategy1")
+        console.log(nickname)
+        navigation.navigate("SelectStrategy1",{nickname:nickname})
+        DBfunction.updateDB(nickname,qid,answer)
       }}/>
     </View>
     );
@@ -81,7 +71,7 @@ const styles = StyleSheet.create({
     },
     btn:{ //Button
       marginTop:30,
-      //fontWeight:"bold",
+      fontWeight:"bold",
       fontSize:32,
       textAlign:'center',
       width: 50,
@@ -95,7 +85,8 @@ const styles = StyleSheet.create({
       height:150,
       borderWidth:2, 
       borderColor:'black'
-    }
+    },
+    
   });
 
 export default MainQuestion1;

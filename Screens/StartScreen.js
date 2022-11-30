@@ -8,12 +8,12 @@ import Paragraph from '../Components/Paragraph'
 export default function StartScreen({ navigation }) {
   return (
     <Background>
-      <Logo />
+      <Logo/>
       <Header>Welcome</Header>
       <Button
         mode="contained"
-        onPress={() => navigation.navigate('LoginScreen')}
-      >
+        onPress={() => {navigation.navigate('LoginScreen')
+        }}>
         Start
       </Button>
     </Background>

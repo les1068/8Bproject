@@ -1,8 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react'
-
-const Question5_2_2 = (props) =>{
+import { updateDB } from '../Database';
+const Question5_2_2 = ({route,navigation}) =>{
+  const [answer,setAnswer] = useState('')
+  const {nickname} = route.params;
+  const qid = "sub_question5_2_2"
+  const solved = true;
     return(
         <View style={styles.container}>
       <StatusBar backgroundColor='black'/>
@@ -21,9 +25,10 @@ const Question5_2_2 = (props) =>{
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>
         How many times can you add 8¼ inches to 34.5 inches to get 84 inches?</Text>
-        <TextInput style={styles.input} multiline={true}/>
+        <TextInput style={styles.input} multiline={true} value={answer} onChangeText={setAnswer}/>
         <TouchableOpacity onPress={()=>{
-        props.navigation.navigate("SelectStrategy5")
+          updateDB(nickname,qid,answer) 
+        navigation.navigate("SelectStrategy5",{nickname:nickname, solved1:solved, solved2:solved})
         }}>
             <Text style={styles.btn}>NEXT</Text>
         </TouchableOpacity>
