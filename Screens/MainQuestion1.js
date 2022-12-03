@@ -27,9 +27,10 @@ const MainQuestion1=({route,navigation})=>{
         style={styles.input}
         value={answer}
         multiline={true}
-        onChangeText={setAnswer} />
+        onChangeText={setAnswer}/>
       </View>
       <Button title='→' color='#6666ff' onPress={()=>{
+        DBfunction.readfromDB()
         console.log(nickname)
         navigation.navigate("SelectStrategy1",{nickname:nickname})
         DBfunction.updateDB(nickname,qid,answer)
@@ -37,7 +38,6 @@ const MainQuestion1=({route,navigation})=>{
     </View>
     );
 }
-
 
 const styles = StyleSheet.create({
     container: {//전체적인 View

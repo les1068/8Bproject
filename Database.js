@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button,StyleSheet,Text } from 'react-native';
+import { View, TextInput, Button,StyleSheet,Text, DynamicColorIOS } from 'react-native';
 import  {db}  from './firebaseConfig';
 import { 
   addDoc, 
@@ -39,7 +39,7 @@ import {
 
   export const queryDB = async ()=>{
     try{
-      const q = query(collection(db, "user"), where("m_question"));
+      const q = query(collection(db, "question"), where("question1","=="));
       const singleDoc = await getDocs(q);
       comsole.log(singleDoc)
     }catch(error){
@@ -49,8 +49,9 @@ import {
 
   export const readfromDB = async ()=>{ //DB Data 읽기
     try{
-      const data = await getDocs(collection(db, "question" ))
+      const data = await getDoc(collection(db,"question","question1"))
       var result = data.docs.map(doc => ({ ...doc.data()}));
+      console.log(result)
     }catch(error){
       console.log(error.message)
     }
@@ -60,6 +61,7 @@ import {
     try{
       await setDoc(doc(db,"User",props), {
         Nickname: props,
+        Score:0
       });
       alert("Added!!")
     }catch(error){
