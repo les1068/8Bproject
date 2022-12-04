@@ -75,8 +75,8 @@ const styles = StyleSheet.create({
     },
     input:{ //답을 입력받는 TextInput
       flexShrink:1, //Input 줄바꿈
-      width:'100%',
-      height:'100%',
+      width:350,
+      height:150,
       borderWidth:2, 
       borderColor:'black'
     }

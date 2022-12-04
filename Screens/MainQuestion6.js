@@ -9,14 +9,7 @@ const MainQuestion6=({route,navigation})=>{
   const qid = "m_question6"
     return(
     <View style={styles.container}>
-      <View>
-      <TouchableOpacity
-        onPress={()=>{
-        navigation.navigate("MainQuestion5",{nickname:nickname})
-      }}>
-        <Text style={styles.btn1} >←</Text>
-      </TouchableOpacity>
-      </View>
+      
       <StatusBar backgroundColor='black'/>
       <View style={styles.questionBox}>
         <Text style={{fontWeight:"bold"}}>{
