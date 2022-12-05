@@ -21,8 +21,8 @@ const SelectStrategy1 = ({route,navigation}) =>{
     return(
       <View style={styles.container}>
       <View style={styles.questionBox}>
-      <Text style={{fontWeight:"bold"}}>{`Todd orders pictures from a photographer. Each picture costs $7.50. 
-      A one-time shipping fee of $3.25 is added to the cost of the order.
+      <Text style={{fontWeight:"bold"}}>{`Todd orders pictures from a photographer. 
+      Each picture costs $7.50. A one-time shipping fee of $3.25 is added to the cost of the order.
       The total cost of Todd’s order before tax is $85.75.`}</Text>
       </View>
 
@@ -31,18 +31,21 @@ const SelectStrategy1 = ({route,navigation}) =>{
 
           <View style={{padding:15}}>
           <Button 
-            color='#6666ff' title="Write an equation to solve the problem" onPress = {()=>navigation.navigate("Question1_1_1",{nickname:nickname})}
+            color='#6666ff' title="Write an equation to solve the problem" 
+             onPress = {()=>navigation.navigate("Question1_1_1",{nickname:nickname})}
             disabled={solved1}
             />
           </View>
 
           <View style={{padding:15}}>
-            <Button color='#6666ff' title="Add on the shipping fee until I get to $85,75." onPress={()=>navigation.navigate("Question1_2_1",{nickname:nickname})}
+            <Button color='#6666ff' title="Add on the shipping fee until I get to $85,75." 
+             onPress={()=>navigation.navigate("Question1_2_1",{nickname:nickname})}
             disabled={solved2}/>
           </View>
 
           <View style={{padding:15}}>
-             <Button color='#6666ff' title="Subtract away from $85,75 until I get to O." onPress = {()=>navigation.navigate("Question1_3_1",{nickname:nickname})}/>
+             <Button color='#6666ff' title="Subtract away from $85,75 until I get to O." 
+              onPress = {()=>navigation.navigate("Question1_3_1",{nickname:nickname})}/>
           </View>
       </View>
 
