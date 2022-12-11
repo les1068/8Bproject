@@ -1,26 +1,42 @@
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
-import  {db}  from '../firebaseConfig';
-import { 
-  addDoc, 
-  collection, 
-  getDocs,
-  doc,
-  updateDoc,
-  deleteDoc,  
-  where,
-  query} from "firebase/firestore"; 
+import { useState, useEffect } from 'react';
 import * as DBfunction from '../Database'
+import SelectStrategy from './SelectStrategy';
+import  {db}  from '../firebaseConfig';
+import { collection, getDoc, doc } from 'firebase/firestore';
 
-const MainQuestion1=({route,navigation})=>{
+const MainQuestion = ({route,navigation}) =>{
   const [answer,setAnswer] = useState('')
-  const {nickname} = route.params;
-  const qid = "m_question1"
+  const [flag,setFlag] = useState(true);
+  const [question,setQuestion] = useState()
+
+  const {qNum} = route.params; //문제 Number
+  const {Name} = route.params; //student Name
+
+  const readfromDB = async ()=>{ //DB에서 Mainquestion을 읽어오기
+    try{
+     const docRef = doc(db,"question",`question${qNum}`);
+     const docSnap = await getDoc(docRef);
+     const result = docSnap.get(`main_Q${qNum}`);
+
+     setQuestion(result)
+    }catch(error){
+      console.log(error.message)
+    }
+  }
+
+  if(flag){
+    setFlag(false);
+    console.log(qNum)
+    readfromDB();
+  }
+
     return(
     <View style={styles.container}>
       <View style={styles.questionBox}>
-       <Text style={{fontWeight:"bold"}}>{`Todd orders pictures from a photographer. Each picture costs $7.50. A one-time shipping fee of $3.25 is added to the cost of the order. The total cost of Todd’s order before tax is $85.75.`}</Text>
+          <Text style={{fontWeight:"bold"}}>{question}</Text>  
       </View>
+      
       <View style={styles.inputView}>
         <Text style={{fontWeight:"bold"}}>What do you think the problem is asking you to do?</Text>
         <TextInput 
@@ -29,14 +45,19 @@ const MainQuestion1=({route,navigation})=>{
         multiline={true}
         onChangeText={setAnswer}/>
       </View>
-      <Button title='→' color='#6666ff' onPress={()=>{
-        DBfunction.readfromDB()
-        console.log(nickname)
-        navigation.navigate("SelectStrategy1",{nickname:nickname})
-        DBfunction.updateDB(nickname,qid,answer)
+      <Button 
+      title='→' 
+      color='#6666ff' 
+      onPress={()=>{
+        if(answer==""){
+          alert("Please Input Text")
+        }else{
+        navigation.navigate("SelectStrategy",{qNum:qNum, question:question}) //qNum은 QuestionNumber, question은 MainQuestion
+        DBfunction.updateScore(Name)
+        }
       }}/>
     </View>
-    );
+    ); 
 }
 
 const styles = StyleSheet.create({
@@ -89,4 +110,4 @@ const styles = StyleSheet.create({
     
   });
 
-export default MainQuestion1;
+export default MainQuestion;

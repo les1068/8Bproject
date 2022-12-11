@@ -10,9 +10,6 @@ import { theme } from '../core/theme'
 import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
 import * as DBfunction from '../Database.js'
-import MainQuestion1 from './MainQuestion1'
-
-
 
 export default function LoginScreen({navigation}) {
   const [addName, setAddName] = useState('')
@@ -23,16 +20,16 @@ export default function LoginScreen({navigation}) {
       <Logo />
       <Header>Welcome.</Header>
       <TextInput
-        label="NickName"
+        label="Enter your Name"
         value={addName}
         onChangeText={setAddName}
       />
       <Button 
-      title='Login'rr
+      title='Login'
       color='#6666ff'
       onPress={() =>{
-      navigation.navigate('MainScreen',{nickname:addName})
-      DBfunction.addNickname(addName)
+      navigation.navigate('SelectQuestion',{Name:addName})
+      DBfunction.addName(addName)
     }}/>
         
     </Background>

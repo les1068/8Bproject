@@ -5,25 +5,50 @@ import {
   addDoc, 
   collection, 
   getDocs,
+  getDoc,
   doc,
   updateDoc,
   deleteDoc,  
   where,
-  query} from "firebase/firestore"; 
-import * as DBfunction from '../Database'
+  query,
+  Firestore} from "firebase/firestore"; 
 
 
-const SelectStrategy1 = ({route,navigation}) =>{
-  const {nickname} = route.params;
-  const solved1 = route.params.solved1;
-  const solved2 = route.params.solved2;
+const SelectStrategy = ({route,navigation}) =>{
+  const [flag,setFlag] = useState(true)
+  const {qNum} = route.params;
+  const {question} = route.params;
+
+  const [strategyA,setStrategyA] = useState();
+  const [strategyB,setStrategyB] = useState();
+  const [strategyC,setStrategyC] = useState();
+
+  const readfromDB = async ()=>{ //DB Data 읽기
+    try{
+     const docRef = doc(db,"question",`question${qNum}`);
+     const docSnap = await getDoc(docRef);
+    
+    const stA = docSnap.get('strategyA.question');
+    const stB = docSnap.get('strategyB.question');
+    const stC = docSnap.get('strategyC.question');
+     
+     setStrategyA(stA);
+     setStrategyB(stB);
+     setStrategyC(stC);
+    }catch(error){
+      console.log(error.message)
+    }
+  }
+
+  if(flag){
+    setFlag(false);
+    readfromDB();
+  }
 
     return(
       <View style={styles.container}>
       <View style={styles.questionBox}>
-      <Text style={{fontWeight:"bold"}}>{`Todd orders pictures from a photographer. Each picture costs $7.50. 
-      A one-time shipping fee of $3.25 is added to the cost of the order.
-      The total cost of Todd’s order before tax is $85.75.`}</Text>
+      <Text style={{fontWeight:"bold"}}>{question}</Text>
       </View>
 
       <View style={styles.inputView}>
@@ -31,18 +56,17 @@ const SelectStrategy1 = ({route,navigation}) =>{
 
           <View style={{padding:15}}>
           <Button 
-            color='#6666ff' title="Write an equation to solve the problem" onPress = {()=>navigation.navigate("Question1_1_1",{nickname:nickname})}
-            disabled={solved1}
+            color='#6666ff' title={strategyA} onPress = {()=>navigation.navigate("Question",{qNum:qNum, question:question, strategy:"strategyA"})}
             />
           </View>
 
           <View style={{padding:15}}>
-            <Button color='#6666ff' title="Add on the shipping fee until I get to $85,75." onPress={()=>navigation.navigate("Question1_2_1",{nickname:nickname})}
-            disabled={solved2}/>
+            <Button color='#6666ff' title={strategyB} onPress={()=>navigation.navigate("Question",{qNum:qNum, question:question, strategy:"strategyB"})}
+            />
           </View>
 
           <View style={{padding:15}}>
-             <Button color='#6666ff' title="Subtract away from $85,75 until I get to O." onPress = {()=>navigation.navigate("Question1_3_1",{nickname:nickname})}/>
+             <Button color='#6666ff' title={strategyC} onPress = {()=>navigation.navigate("Question",{qNum:qNum, question:question, strategy:"strategyC"})}/>
           </View>
       </View>
 
@@ -88,4 +112,4 @@ const styles = StyleSheet.create({
     },
   });
   
-  export default SelectStrategy1;
+  export default SelectStrategy;

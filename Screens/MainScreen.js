@@ -12,7 +12,7 @@ const MainScreen = ({route,navigation})=>{
       <StatusBar backgroundColor='black'/>
       <TouchableOpacity onPress={()=>{ 
         console.log(nickname)
-        navigation.navigate("MainQuestion1",{nickname:nickname})}}>
+        navigation.navigate("MainQuestion",{nickname:nickname},)}}>
         <View style={styles.questionBox}>
           <Text style={{fontWeight:"bold"}}>Start</Text> 
         </View>
