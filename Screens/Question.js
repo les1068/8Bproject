@@ -95,7 +95,33 @@ const Question = ({route,navigation}) =>{
             console.log(progress)
             console.log("hi")
           }else if(strategy=="strategyC"){ //마지막 strategyC이면 다시 SelectQuestion으로 간다.
-            navigation.navigate("SelectQuestion",{complete:true})
+            switch(qNum){
+              case 1:
+                navigation.navigate("SelectQuestion",{complete1:true})
+                break;
+              case 2:
+                navigation.navigate("SelectQuestion",{complete2:true})
+                break;
+              case 3:
+                navigation.navigate("SelectQuestion",{complete3:true})
+                break;
+              case 4:
+                navigation.navigate("SelectQuestion",{complete4:true})
+                break;
+              case 5:
+                navigation.navigate("SelectQuestion",{complete5:true})
+                break;
+              case 6:
+                navigation.navigate("SelectQuestion",{complete6:true})
+                break;
+              case 7:
+                navigation.navigate("SelectQuestion",{complete7:true})
+                break;
+              case 8:
+                navigation.navigate("SelectQuestion",{complete8:true})
+                break;
+            }
+           
           }
           else{
             console.log("else") //해당 strategy에 대한 모든 step을 완료하면 SelectStrategy로 간다.
