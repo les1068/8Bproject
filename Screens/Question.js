@@ -133,6 +133,7 @@ const Question = ({route,navigation}) =>{
       </View>
     </View>
     );
+    
 }
 
 const styles = StyleSheet.create({
