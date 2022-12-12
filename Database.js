@@ -13,47 +13,18 @@ import {
   Firestore,
   getDoc, 
   setDoc,UpdateData} from "firebase/firestore"; 
+import { async } from '@firebase/util';
 
-  export const deletefromDB = async ()=>{
+  export const updateScore = async (nickname)=>{//정답시 점수를 올려주는 메소드
     try{
-      const docRef = doc(db, "user", id);
-      await deleteDoc(docRef);
-      alert("Deleted!!")
-      readfromDB()
-    }catch(error){
-      console.log(error.message)
-    }
-  }
+      const docRef = doc(db, "student",nickname); //props is nickname.
+      const docSnap = await getDoc(docRef);
+      const currentScore = docSnap.get("Score");
+      console.log("currentScore", currentScore)
+      let updatedScore = currentScore+1;
 
-  export const queryDB = async ()=>{
-    try{
-      const q = await query(collection(db, "question"), where("sub_question1_1","==","Anything equivalent to 85.75=3.25+7.5*p"));
-      const singleDoc = await getDocs(q);
-      console.log(singleDoc)
-    }catch(error){
-      console.log(error.message)
-    }
-  }
-
-  export const updateDB = async (props,qid,answer)=>{//nickname, question id, answer
-    try{
-      const docRef = doc(db, "User",props); //props is nickname.
-      await updateDoc(docRef, 
-        `${qid}`,answer, //qid: answer 형태로 DB에 Update
-      );
-      alert("Updated!!")
-    }catch(error){
-      console.log(error.message)
-    }
-  }
-  
-  export const updateScore = async (props)=>{//nickname, Score
-    const [score,setScore] = useState(0);
-    try{
-      setScore(score+1);
-      const docRef = doc(db, "student",props); //props is nickname.
       await updateDoc(docRef,{
-        Score:score
+        Score:updatedScore
       });
       alert("addScore")
     }catch(error){
@@ -73,7 +44,8 @@ import {
     }
   }
 
-  export const addName = async (props)=>{
+
+  export const addName = async (props)=>{ //Login Screen에서 닉네임 입력시 DB에 학생정보를 추가한다.
     try{
       await setDoc(doc(db,"student",props), {
         Name: props,
@@ -85,16 +57,7 @@ import {
     }
   }
 
-  export const addAnswer = async (props,answer)=>{
-    try{
-      await setDoc(doc(db,"User",props), {
-        m_question: answer
-      });
-      alert("Added!!")
-    }catch(error){
-      console.log(error.message)
-    }
-  }
+ 
   
 
 

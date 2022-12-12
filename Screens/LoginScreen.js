@@ -28,8 +28,8 @@ export default function LoginScreen({navigation}) {
       title='Login'
       color='#6666ff'
       onPress={() =>{
-      navigation.navigate('SelectQuestion',{Name:addName})
       DBfunction.addName(addName)
+      navigation.navigate('SelectQuestion',{Name:addName})
     }}/>
         
     </Background>

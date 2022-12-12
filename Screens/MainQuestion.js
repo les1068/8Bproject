@@ -13,7 +13,7 @@ const MainQuestion = ({route,navigation}) =>{
   const {qNum} = route.params; //문제 Number
   const {Name} = route.params; //student Name
 
-  const readfromDB = async ()=>{ //DB에서 Mainquestion을 읽어오기
+  const readQuestion = async ()=>{ //DB에서 Mainquestion을 읽어오기
     try{
      const docRef = doc(db,"question",`question${qNum}`);
      const docSnap = await getDoc(docRef);
@@ -25,11 +25,9 @@ const MainQuestion = ({route,navigation}) =>{
     }
   }
 
-  if(flag){
-    setFlag(false);
-    console.log(qNum)
-    readfromDB();
-  }
+  useEffect(()=>{
+    readQuestion(); //한번만 DB를 읽기 위해 useEffect를 사용한다.
+  },[])
 
     return(
     <View style={styles.container}>
@@ -48,12 +46,12 @@ const MainQuestion = ({route,navigation}) =>{
       <Button 
       title='→' 
       color='#6666ff' 
-      onPress={()=>{
+      onPress={async ()=>{
         if(answer==""){
           alert("Please Input Text")
         }else{
-        navigation.navigate("SelectStrategy",{qNum:qNum, question:question}) //qNum은 QuestionNumber, question은 MainQuestion
-        DBfunction.updateScore(Name)
+        await DBfunction.updateScore(Name) //MainQuestion은 모든게 정답이기 때문에 Score를 추가한다.
+        navigation.navigate("SelectStrategy",{qNum:qNum, Name:Name, question:question}) //qNum은 QuestionNumber, question은 MainQuestion
         }
       }}/>
     </View>

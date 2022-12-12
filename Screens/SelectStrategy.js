@@ -1,5 +1,5 @@
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import  {db}  from '../firebaseConfig';
 import { 
   addDoc, 
@@ -17,13 +17,14 @@ import {
 const SelectStrategy = ({route,navigation}) =>{
   const [flag,setFlag] = useState(true)
   const {qNum} = route.params;
+  const {Name} = route.params;
   const {question} = route.params;
 
   const [strategyA,setStrategyA] = useState();
   const [strategyB,setStrategyB] = useState();
   const [strategyC,setStrategyC] = useState();
 
-  const readfromDB = async ()=>{ //DB Data 읽기
+  const readQuestion = async ()=>{ //DB Data 읽기
     try{
      const docRef = doc(db,"question",`question${qNum}`);
      const docSnap = await getDoc(docRef);
@@ -39,11 +40,10 @@ const SelectStrategy = ({route,navigation}) =>{
       console.log(error.message)
     }
   }
+  useEffect(()=>{
+    readQuestion(); //한번만 DB를 읽기 위해 useEffect를 사용한다.
+  },[])
 
-  if(flag){
-    setFlag(false);
-    readfromDB();
-  }
 
     return(
       <View style={styles.container}>
@@ -56,17 +56,17 @@ const SelectStrategy = ({route,navigation}) =>{
 
           <View style={{padding:15}}>
           <Button 
-            color='#6666ff' title={strategyA} onPress = {()=>navigation.navigate("Question",{qNum:qNum, question:question, strategy:"strategyA"})}
+            color='#6666ff' title={strategyA} onPress = {()=>navigation.navigate("Question",{qNum:qNum, Name:Name, question:question, strategy:"strategyA"})}
             />
           </View>
 
           <View style={{padding:15}}>
-            <Button color='#6666ff' title={strategyB} onPress={()=>navigation.navigate("Question",{qNum:qNum, question:question, strategy:"strategyB"})}
+            <Button color='#6666ff' title={strategyB} onPress={()=>navigation.navigate("Question",{qNum:qNum, Name:Name, question:question, strategy:"strategyB"})}
             />
           </View>
 
           <View style={{padding:15}}>
-             <Button color='#6666ff' title={strategyC} onPress = {()=>navigation.navigate("Question",{qNum:qNum, question:question, strategy:"strategyC"})}/>
+             <Button color='#6666ff' title={strategyC} onPress = {()=>navigation.navigate("Question",{qNum:qNum, Name:Name, question:question, strategy:"strategyC"})}/>
           </View>
       </View>
 

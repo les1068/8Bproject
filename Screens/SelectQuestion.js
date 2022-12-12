@@ -11,25 +11,25 @@ const SelectQuestion =({route,navigation})=>{
             onPress={()=>navigation.navigate("MainQuestion",{qNum:1,Name:Name})}/>
             <Button 
             title='question2'
-            onPress={()=>navigation.navigate("MainQuestion",{qNum:2})}/>
+            onPress={()=>navigation.navigate("MainQuestion",{qNum:2,Name:Name})}/>
             <Button 
             title='question3'
-            onPress={()=>navigation.navigate("MainQuestion",{qNum:3})}/>
+            onPress={()=>navigation.navigate("MainQuestion",{qNum:3,Name:Name})}/>
             <Button 
             title='question4'
-            onPress={()=>navigation.navigate("MainQuestion",{qNum:4})}/>
+            onPress={()=>navigation.navigate("MainQuestion",{qNum:4,Name:Name})}/>
             <Button 
             title='question5'
-            onPress={()=>navigation.navigate("MainQuestion",{qNum:5})}/>
+            onPress={()=>navigation.navigate("MainQuestion",{qNum:5,Name:Name})}/>
             <Button 
             title='question6'
-            onPress={()=>navigation.navigate("MainQuestion",{qNum:6})}/>
+            onPress={()=>navigation.navigate("MainQuestion",{qNum:6,Name:Name})}/>
             <Button 
             title='question7'
-            onPress={()=>navigation.navigate("MainQuestion",{qNum:7})}/>
+            onPress={()=>navigation.navigate("MainQuestion",{qNum:7,Name:Name})}/>
             <Button 
             title='question8'
-            onPress={()=>navigation.navigate("MainQuestion",{qNum:8})}/>
+            onPress={()=>navigation.navigate("MainQuestion",{qNum:8,Name:Name})}/>
         </View>
     );
 }
